@@ -1,10 +1,6 @@
 import numpy as np
-import pandas as pd
 import plotly.graph_objs as gobj
 from giotto.diagrams._utils import _subdiagrams
-import giotto.diagrams as diag
-from sklearn.cluster import KMeans
-from sklearn.metrics.cluster import homogeneity_score
 
 
 def plot_diagram(diagram, homology_dimensions=None):
@@ -87,79 +83,3 @@ def plot_diagram(diagram, homology_dimensions=None):
         )
 
     fig.show()
-
-
-def get_mean_lifetime(X, n_windows, n_points):
-    return (
-        pd.DataFrame(
-            np.column_stack(
-                (
-                    np.repeat(np.arange(n_windows), n_points),
-                    X.reshape(n_windows * n_points, -1),
-                )
-            ),
-            columns=["window", "birth", "death", "dim"],
-        )
-        .astype({"window": "int32", "dim": "int32"})
-        .groupby(["window", "dim"])
-        .apply(lambda g: (g["death"] - g["birth"]).mean())
-        .to_list()
-    )
-
-
-def get_n_rel_holes(X, n_windows, n_points, frac):
-    return (
-        pd.DataFrame(
-            np.column_stack(
-                (
-                    np.repeat(np.arange(n_windows), n_points),
-                    X.reshape(n_windows * n_points, -1),
-                )
-            ),
-            columns=["window", "birth", "death", "dim"],
-        )
-        .astype({"window": "int32", "dim": "int32"})
-        .groupby(["window", "dim"])
-        .apply(lambda g: (g["death"] - g["birth"]))
-        .groupby(level=[0, 1])
-        .apply(lambda x: len(x.where(x >= frac * x.max()).dropna()))
-        .to_list()
-    )
-
-
-def get_max_lifetime(X, n_windows, n_points):
-    return (
-        pd.DataFrame(
-            np.column_stack(
-                (
-                    np.repeat(np.arange(n_windows), n_points),
-                    X.reshape(n_windows * n_points, -1),
-                )
-            ),
-            columns=["window", "birth", "death", "dim"],
-        )
-        .astype({"window": "int32", "dim": "int32"})
-        .groupby(["window", "dim"])
-        .apply(lambda g: (g["death"] - g["birth"]).max())
-        .to_list()
-    )
-
-
-def get_amplitude(X, metric="wasserstein"):
-    wasserstein_amplitudes = diag.Amplitude(metric="wasserstein")
-    return wasserstein_amplitudes.fit_transform(X).flatten().tolist()
-
-
-def fit_and_score_model(X, y_train, y_test, id_train, id_test):
-    X_train = X[id_train, :]
-    X_test = X[id_test, :]
-
-    # k means
-    kmeans = KMeans(n_clusters=2, random_state=0)
-    kmeans.fit(X_train)
-
-    # score
-    print("Homogeneity score (training):", homogeneity_score(y_train, kmeans.labels_))
-    print(
-        "Homogeneity score (test):", homogeneity_score(y_test, kmeans.predict(X_test)),
-    )
