@@ -1,6 +1,8 @@
 import numpy as np
 import plotly.graph_objs as gobj
 from giotto.diagrams._utils import _subdiagrams
+import seaborn as sns
+import matplotlib.pyplot as plt
 
 
 def plot_diagram(diagram, homology_dimensions=None):
@@ -83,3 +85,23 @@ def plot_diagram(diagram, homology_dimensions=None):
         )
 
     fig.show()
+
+
+def plot_time_series(data, series_id, n_steps):
+    fig, ax = plt.subplots(2, 1, sharex=True, figsize=(16, 8))
+
+    sns.lineplot(
+        x=range(n_steps + 1),
+        y=data[(data["series_id"] == series_id) & (data["type"] == "stable")]["adults"],
+        ax=ax[0],
+    ).set_title("Stable")
+
+    sns.lineplot(
+        x=range(n_steps + 1),
+        y=data[(data["series_id"] == series_id) & (data["type"] == "aperiodic")][
+            "adults"
+        ],
+        ax=ax[1],
+    ).set_title("Aperiodic")
+
+    plt.show()
