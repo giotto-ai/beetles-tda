@@ -62,7 +62,10 @@ def fixed_noise(n_steps, n_series, args_stable, args_aperiodic):
         pickle.dump(data_stable_aperiodic, file)
 
 
-def simu_data(noise, n_steps, n_series, args_stable, args_aperiodic):
+def simulate_data(noise, std, n_steps, n_series, args_stable, args_aperiodic):
+    # fix seed for reproducibility
+    np.random.seed(42)
+
     # instantiate instances of beetle class
     pop_stable = BeetlePopulation(**args_stable)
     pop_aperiodic = BeetlePopulation(**args_aperiodic)
@@ -75,7 +78,7 @@ def simu_data(noise, n_steps, n_series, args_stable, args_aperiodic):
     for itr in range(n_series):
         l_0, p_0, a_0 = 98 * np.random.rand(3) + 2
 
-        std_noise = 0.1 * np.random.randn(3) + noise
+        std_noise = std * np.random.randn(3) + noise
 
         data = pd.concat(
             [
@@ -115,6 +118,7 @@ def varying_noise(n_steps, n_series, args_stable, args_aperiodic):
     min_noise = 0.0
     max_noise = 2.1
     step_size = 0.1
+    std = 0.1
 
     parameters_type = "fixed"
     embedding_dimension = 2
@@ -171,7 +175,9 @@ def varying_noise(n_steps, n_series, args_stable, args_aperiodic):
     for noise in mb:
         for _ in progress_bar(range(max_itr), parent=mb):
             mb.child.comment = "Repetitions per noise level"
-            data = simu_data(noise, n_steps, n_series, args_stable, args_aperiodic)
+            data = simulate_data(
+                noise, std, n_steps, n_series, args_stable, args_aperiodic
+            )
             # group data by type and series id
             grouped_data = data.groupby(["type", "series_id"])
 
