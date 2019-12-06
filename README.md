@@ -1,11 +1,29 @@
+<img src="https://www.giotto.ai/static/vector/logo.svg" alt="logo" width="850"/>
+
 # Analysing Beetle Population Dynamics with Topological Data Analysis
 
 ## What is it?
+A guide to studying population dynamics with topological data analysis. We aim at correctly
+identifying two clusters in an ensemble of time series describing the adult population of the 
+[_Tribolium_ flour beetle](https://en.wikipedia.org/wiki/Red_flour_beetle). We compare our approach to a 
+baseline approach where we cluster the unmodified time series.
 
-A guide to studying population dynamics with topological data analysis. See the accompanying blog post for further details.
+See the accompanying [blog post](https://towardsdatascience.com/the-shape-of-population-dynamics-ba70f253919f) 
+for further details.
+
+## Data
+Here, we simulate the evolution of the adult population of _Tribolium_ flour beetles. This approach is reasonable and justified as there exist mathematical models describing the population dynamics of _Tribolium_ flour beetles adequately. The beetles' life cycle consists of larva, pupa, and adult stages, with the transition between each stage lasting approximately two weeks. Remarkably, _Tribolium_ flour beetles become cold-hearted in face of overpopulation as they turn cannibalistic by eating unhatched eggs and pupae.
+
+## Feature Creation
+We use tools provided by topological data analysis to create several features. For each time series, these features are combined into one vector. The collection of those can then be clustered. The general pipeline is as follows: First, we embed each time series describing an adult population into a higher dimensional space. Next, we calculate the persistence diagrams and extract features from them. More details are given in the [blog post](https://towardsdatascience.com/the-shape-of-population-dynamics-ba70f253919f) and jupyter notebook.
+
+## Model
+For both the baseline and our approach, we use k-means to find clusters within the simulated data.
+
+## Results
+We show that an approach using TDA features outperforms the baseline. This even holds true in the presence of high environmental uncertainty.
 
 ## Getting started
-
 Spin up a virtual environment and install the required libraries:
 
 ```
@@ -43,4 +61,3 @@ unset NODE_OPTIONS
 # (Windows)
 set NODE_OPTIONS=
 ```
-
