@@ -14,7 +14,11 @@ for further details.
 ## Data
 Here, we simulate the evolution of the adult population of _Tribolium_ flour beetles. This approach is reasonable and justified as there exist mathematical models describing the population dynamics of _Tribolium_ flour beetles adequately. The beetles' life cycle consists of larva, pupa, and adult stages, with the transition between each stage lasting approximately two weeks. Following <a href="https://www.nature.com/articles/375227a0">Costantino, Cushing, Dennis and Desharnais</a>, we can describe the dynamics of the beetle population using the following set of difference equations:
 
-<img src="https://latex.codecogs.com/gif.latex?\begin{aligned}&space;L_{t&space;&plus;&space;1}&space;&=&space;b&space;A_t&space;e^{E_{1,&space;t}&space;-c_{ea}&space;A_t&space;-&space;c_{el}&space;L_t}\\&space;P_{t&space;&plus;&space;1}&space;&=&space;L_t&space;(1&space;-&space;\mu_l)&space;e^{E_{2,&space;t}}\\&space;A_{t&space;&plus;&space;1}&space;&=&space;[P_t&space;e^{-c_{pa}&space;A_t}&space;&plus;&space;A_t&space;(1&space;-&space;\mu_a)]e^{E_{3,&space;t}}&space;\end{aligned}" title="\begin{aligned} L_{t + 1} &= b A_t e^{E_{1, t} -c_{ea} A_t - c_{el} L_t}\\ P_{t + 1} &= L_t (1 - \mu_l) e^{E_{2, t}}\\ A_{t + 1} &= [P_t e^{-c_{pa} A_t} + A_t (1 - \mu_a)]e^{E_{3, t}} \end{aligned}" />
+\begin{aligned}
+    L_{t + 1} &= b A_t e^{E_{1, t} -c_{ea} A_t - c_{el} L_t}\\
+    P_{t + 1} &= L_t (1 - \mu_l) e^{E_{2, t}}\\
+    A_{t + 1} &= [P_t e^{-c_{pa} A_t} + A_t (1 - \mu_a)]e^{E_{3, t}}
+\end{aligned}
 
 Here, $L_t, P_t$ and $A_t$ denote the number of larvae, pupae and adults at time $t$, while $\mu_l$ and $\mu_a$ denote the fraction of larvae and pupae that dies. _Tribolium_ flour beetles become cold-hearted in face of overpopulation as they turn cannibalistic by eating unhatched eggs and pupae. This behaviour is modeled by exponential decays $exp(-c_{ea}A_t)$ and $exp(-c_{el}L_t)$. The probability of surviving this massacre from pupa to adult stage is given by $exp(-c_{pa}A_t)$. To incorporate, for example, environmental uncertainty, we include multivariate normally distributed noise $E_{1, t}, E_{2, t}$ and $E_{3, t}$ with mean zero and common standard deviation $\sigma$.
 
