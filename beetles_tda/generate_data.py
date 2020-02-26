@@ -6,16 +6,16 @@ from beetles_tda.beetle import BeetlePopulation
 from sklearn.model_selection import train_test_split
 from sklearn.cluster import KMeans
 from sklearn.metrics.cluster import homogeneity_score
-import giotto.time_series as ts
-import giotto.homology as hl
-from giotto.pipeline import Pipeline
+import gtda.time_series as ts
+import gtda.homology as hl
+from gtda.pipeline import Pipeline
 from beetles_tda.features import (
     get_amplitude,
     get_max_lifetime,
     get_mean_lifetime,
     get_n_rel_holes,
 )
-import giotto.diagrams as diag
+import gtda.diagrams as diag
 from fastprogress import master_bar, progress_bar
 
 

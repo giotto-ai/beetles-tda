@@ -1,4 +1,4 @@
-import giotto.diagrams as diag
+import gtda.diagrams as diag
 import numpy as np
 import pandas as pd
 

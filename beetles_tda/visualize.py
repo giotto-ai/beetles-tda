@@ -1,6 +1,6 @@
 import numpy as np
 import plotly.graph_objs as gobj
-from giotto.diagrams._utils import _subdiagrams
+from gtda.diagrams._utils import _subdiagrams
 import seaborn as sns
 import matplotlib.pyplot as plt
 
