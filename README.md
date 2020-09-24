@@ -1,4 +1,4 @@
-<img src="https://www.giotto.ai/static/vector/logo.svg" alt="logo" width="850"/>
+![logo](https://raw.githubusercontent.com/giotto-ai/giotto-tda/master/doc/images/tda_logo.svg)
 
 # Analysing Beetle Population Dynamics with Topological Data Analysis
 
